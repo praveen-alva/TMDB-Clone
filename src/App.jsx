@@ -9,6 +9,7 @@ import Banner from './components/Banner'
 function App() {
   const [watchlist, setWatchList] = useState([])
   const [genreMap, setGenreMap] = useState({})
+  const [selectedMovie, setSelectedMovie] = useState(null)
 
   useEffect(() => {
     axios.get('https://api.themoviedb.org/3/genre/movie/list', {
@@ -16,13 +17,15 @@ function App() {
         api_key: 'YOUR_API_KEY',
         language: 'en-US',
       }
-    }).then(res => {
-      const map = {}
-      res.data.genres.forEach(genre => {
-        map[genre.id] = genre.name
+    })
+      .then(res => {
+        const map = {}
+        res.data.genres.forEach(genre => {
+          map[genre.id] = genre.name
+        })
+        setGenreMap(map)
       })
-      setGenreMap(map)
-    }).catch(err => console.error(err))
+      .catch(err => console.error(err))
   }, [])
 
   const handleAddtoWatchlist = (movie) => {
@@ -43,11 +46,12 @@ function App() {
           path="/"
           element={
             <>
-              <Banner />
+              <Banner movie={selectedMovie} />
               <Movies
                 watchlist={watchlist}
                 handleAddtoWatchlist={handleAddtoWatchlist}
                 handleRemoveWatchlist={handleRemoveWatchlist}
+                setSelectedMovie={setSelectedMovie}
               />
             </>
           }
