@@ -23,7 +23,7 @@ const Movies = ({ handleAddtoWatchlist, handleRemoveWatchlist, watchlist, setSel
   return (
     <div className="p-5">
       <div className="text-2xl m-5 font-bold text-center">
-        Trending Movies and Series
+        Trending Movies
       </div>
       <div className="flex flex-wrap justify-center gap-6">
         {movies.map(movie => (
